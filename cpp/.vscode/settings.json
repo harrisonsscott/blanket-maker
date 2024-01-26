@@ -1,0 +1,9 @@
+{
+    "C_Cpp.errorSquiggles": "enabled",
+    "files.associations": {
+        "*.tcc": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp"
+    }
+}
