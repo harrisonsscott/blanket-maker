@@ -4,3 +4,11 @@
 *.jpg
 *.jpeg
 *.gif
+*.exe
+
+[Mm]ake[Ff]ile.*
+./cpp/CMakeCache.txt
+./cpp/CMakeFiles/
+./cpp/cmake_install.cmake
+./cpp/[Mm]ake[Ff]ile
+./cpp/json/

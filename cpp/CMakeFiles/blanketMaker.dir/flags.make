@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -isystem /usr/local/include/opencv4
+CXX_INCLUDES = -I/home/hsscott/Documents/Programming/blanketMaker/cpp/./json/include -isystem /usr/local/include/opencv4
 
 CXX_FLAGS = 
 

@@ -15,3 +15,5 @@ set(DWITH_FFMPEG ON)
 set(DFFMPEG ON)
 set(DWITH_OPENCL ON)
 set(DHAVE_FFMPEG ON)
+
+include_directories(./json/include)

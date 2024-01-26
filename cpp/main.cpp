@@ -3,6 +3,7 @@
 #include <cmath>
 #include <string>
 #include <opencv2/opencv.hpp>
+#include "nlohmann/json.hpp"
 
 using namespace cv;
 
