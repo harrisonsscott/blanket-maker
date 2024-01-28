@@ -19,14 +19,22 @@ float getSimilarity(Vec3b color1, Vec3b color2){
 		0.3 * std::pow(color1[2] - color2[2], 2);
 }
 
-Vec3b hexToRGB(const char* hex){
-	int r, g, b;
+int hexToInt(std::string hex) {
+	return stoi(hex, nullptr, 16);
 
-	sscanf(hex, "%02x%02x%02x", &r, &g, &b);
-	
-	std::cout << r << g << b << std::endl;
+}
 
-	return Vec3b(b,g,r);
+Vec3b hexToRGB(const std::string& hex){
+	int red, green, blue;
+	const char *hexstring = hex.c_str();
+	char rstring[3];
+	char gstring[3];
+	char bstring[3];
+	strncpy(rstring,&hexstring[1],2);
+	strncpy(gstring,&hexstring[3],2);
+	strncpy(bstring,&hexstring[5],2);
+
+	return Vec3b(hexToInt(bstring), hexToInt(gstring), hexToInt(rstring));
 }
 
 int main(int argc, char *argv[]){
