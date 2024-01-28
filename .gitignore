@@ -5,6 +5,7 @@
 *.jpeg
 *.gif
 *.exe
+*.json
 
 [Mm]ake[Ff]ile.*
 ./cpp/CMakeCache.txt

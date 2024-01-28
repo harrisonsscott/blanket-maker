@@ -23,6 +23,8 @@ Vec3b hexToRGB(const char* hex){
 	int r, g, b;
 
 	sscanf(hex, "%02x%02x%02x", &r, &g, &b);
+	
+	std::cout << r << g << b << std::endl;
 
 	return Vec3b(b,g,r);
 }
@@ -51,15 +53,27 @@ int main(int argc, char *argv[]){
 	json data = json::parse(file);
 
 	for (const auto& color: data["colors"]){
+		std::cout << color << std::endl;
+		std::cout << hexToRGB(color.get<std::string>().c_str()) << std::endl;
 		palette.push_back(hexToRGB(color.get<std::string>().c_str()));
 	}
 
-	std::cout << data["colors"] << std::endl;
+	std::cout << palette[3] << std::endl;
 
 	for (int x = 0; x < im.rows; x++){
 		for (int y = 0; y < im.cols; y++ ){
+			int similarity = 10000000;
 			Vec3b & color = im.at<Vec3b>(x,y);
-			im.at<Vec3b>(Point(y,x)) = color;
+			std::cout << color << std::endl;
+			Vec3b selectedColor;
+			for (auto i: palette){
+				if (getSimilarity(color, i) < similarity){
+					similarity = getSimilarity(color, i);
+					selectedColor = i;
+				}
+			}
+			std::cout << selectedColor << std::endl;
+			im.at<Vec3b>(Point(y,x)) = selectedColor;
 		}
 	}
 
