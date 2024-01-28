@@ -423,16 +423,144 @@ CMakeFiles/blanketMaker.dir/main.cpp.o: main.cpp \
   /usr/local/include/opencv4/opencv2/video.hpp \
   /usr/local/include/opencv4/opencv2/video/tracking.hpp \
   /usr/local/include/opencv4/opencv2/video/background_segm.hpp \
-  /usr/local/include/opencv4/opencv2/core/core.hpp
+  /usr/local/include/opencv4/opencv2/core/core.hpp \
+  json/include/nlohmann/json.hpp \
+  /usr/include/c++/11/iterator \
+  /usr/include/c++/11/bits/stream_iterator.h \
+  json/include/nlohmann/adl_serializer.hpp \
+  json/include/nlohmann/detail/abi_macros.hpp \
+  json/include/nlohmann/detail/conversions/from_json.hpp \
+  /usr/include/c++/11/forward_list \
+  /usr/include/c++/11/bits/forward_list.h \
+  /usr/include/c++/11/bits/forward_list.tcc \
+  /usr/include/c++/11/valarray \
+  /usr/include/c++/11/bits/valarray_array.h \
+  /usr/include/c++/11/bits/valarray_array.tcc \
+  /usr/include/c++/11/bits/valarray_before.h \
+  /usr/include/c++/11/bits/slice_array.h \
+  /usr/include/c++/11/bits/valarray_after.h \
+  /usr/include/c++/11/bits/gslice.h \
+  /usr/include/c++/11/bits/gslice_array.h \
+  /usr/include/c++/11/bits/mask_array.h \
+  /usr/include/c++/11/bits/indirect_array.h \
+  json/include/nlohmann/detail/exceptions.hpp \
+  json/include/nlohmann/detail/value_t.hpp \
+  json/include/nlohmann/detail/macro_scope.hpp \
+  json/include/nlohmann/detail/meta/detected.hpp \
+  json/include/nlohmann/detail/meta/void_t.hpp \
+  json/include/nlohmann/thirdparty/hedley/hedley.hpp \
+  /usr/include/c++/11/version \
+  /usr/include/c++/11/cassert \
+  json/include/nlohmann/detail/string_escape.hpp \
+  json/include/nlohmann/detail/input/position_t.hpp \
+  json/include/nlohmann/detail/meta/cpp_future.hpp \
+  json/include/nlohmann/detail/meta/type_traits.hpp \
+  json/include/nlohmann/detail/iterators/iterator_traits.hpp \
+  json/include/nlohmann/detail/meta/call_std/begin.hpp \
+  json/include/nlohmann/detail/meta/call_std/end.hpp \
+  json/include/nlohmann/json_fwd.hpp \
+  json/include/nlohmann/detail/string_concat.hpp \
+  json/include/nlohmann/detail/meta/identity_tag.hpp \
+  json/include/nlohmann/detail/meta/std_fs.hpp \
+  /usr/include/c++/11/filesystem \
+  /usr/include/c++/11/bits/fs_fwd.h \
+  /usr/include/c++/11/bits/fs_path.h \
+  /usr/include/c++/11/codecvt \
+  /usr/include/c++/11/bits/fs_dir.h \
+  /usr/include/c++/11/bits/fs_ops.h \
+  json/include/nlohmann/detail/conversions/to_json.hpp \
+  json/include/nlohmann/detail/iterators/iteration_proxy.hpp \
+  json/include/nlohmann/byte_container_with_subtype.hpp \
+  json/include/nlohmann/detail/hash.hpp \
+  json/include/nlohmann/detail/input/binary_reader.hpp \
+  json/include/nlohmann/detail/input/input_adapters.hpp \
+  /usr/include/c++/11/numeric \
+  /usr/include/c++/11/bits/stl_numeric.h \
+  /usr/include/c++/11/pstl/glue_numeric_defs.h \
+  json/include/nlohmann/detail/input/json_sax.hpp \
+  json/include/nlohmann/detail/input/lexer.hpp \
+  json/include/nlohmann/detail/meta/is_sax.hpp \
+  json/include/nlohmann/detail/input/parser.hpp \
+  json/include/nlohmann/detail/iterators/internal_iterator.hpp \
+  json/include/nlohmann/detail/iterators/primitive_iterator.hpp \
+  json/include/nlohmann/detail/iterators/iter_impl.hpp \
+  json/include/nlohmann/detail/iterators/json_reverse_iterator.hpp \
+  json/include/nlohmann/detail/json_custom_base_class.hpp \
+  json/include/nlohmann/detail/json_pointer.hpp \
+  json/include/nlohmann/detail/json_ref.hpp \
+  json/include/nlohmann/detail/output/binary_writer.hpp \
+  json/include/nlohmann/detail/output/output_adapters.hpp \
+  json/include/nlohmann/detail/output/serializer.hpp \
+  json/include/nlohmann/detail/conversions/to_chars.hpp \
+  json/include/nlohmann/ordered_map.hpp \
+  /usr/include/c++/11/any \
+  json/include/nlohmann/detail/macro_unscope.hpp \
+  json/include/nlohmann/thirdparty/hedley/hedley_undef.hpp
 
+
+json/include/nlohmann/detail/conversions/to_chars.hpp:
+
+json/include/nlohmann/detail/output/serializer.hpp:
+
+json/include/nlohmann/detail/output/output_adapters.hpp:
+
+json/include/nlohmann/detail/json_ref.hpp:
+
+json/include/nlohmann/detail/iterators/iter_impl.hpp:
+
+json/include/nlohmann/detail/iterators/internal_iterator.hpp:
+
+json/include/nlohmann/detail/input/parser.hpp:
+
+json/include/nlohmann/detail/meta/is_sax.hpp:
+
+/usr/include/c++/11/numeric:
+
+/usr/include/c++/11/bits/fs_ops.h:
+
+/usr/include/c++/11/filesystem:
+
+json/include/nlohmann/detail/meta/std_fs.hpp:
+
+/usr/include/c++/11/bits/fs_dir.h:
+
+json/include/nlohmann/detail/meta/identity_tag.hpp:
+
+json/include/nlohmann/detail/meta/call_std/begin.hpp:
+
+json/include/nlohmann/detail/iterators/iterator_traits.hpp:
+
+/usr/include/c++/11/version:
+
+json/include/nlohmann/detail/meta/void_t.hpp:
+
+json/include/nlohmann/detail/exceptions.hpp:
+
+/usr/include/c++/11/bits/valarray_after.h:
+
+/usr/include/c++/11/bits/slice_array.h:
+
+/usr/include/c++/11/bits/valarray_array.h:
+
+/usr/include/c++/11/valarray:
+
+json/include/nlohmann/adl_serializer.hpp:
+
+json/include/nlohmann/json.hpp:
 
 /usr/local/include/opencv4/opencv2/core/core.hpp:
+
+/usr/include/c++/11/cassert:
 
 /usr/local/include/opencv4/opencv2/video/tracking.hpp:
 
 /usr/local/include/opencv4/opencv2/stitching/detail/blenders.hpp:
 
+json/include/nlohmann/detail/meta/detected.hpp:
+
 /usr/local/include/opencv4/opencv2/stitching/detail/seam_finders.hpp:
+
+json/include/nlohmann/detail/input/lexer.hpp:
 
 /usr/local/include/opencv4/opencv2/stitching/detail/camera.hpp:
 
@@ -456,9 +584,17 @@ CMakeFiles/blanketMaker.dir/main.cpp.o: main.cpp \
 
 /usr/local/include/opencv4/opencv2/objdetect/face.hpp:
 
+json/include/nlohmann/detail/iterators/primitive_iterator.hpp:
+
 /usr/local/include/opencv4/opencv2/objdetect/detection_based_tracker.hpp:
 
+json/include/nlohmann/detail/conversions/to_json.hpp:
+
 /usr/local/include/opencv4/opencv2/objdetect/aruco_board.hpp:
+
+json/include/nlohmann/detail/input/position_t.hpp:
+
+/usr/include/c++/11/bits/mask_array.h:
 
 /usr/local/include/opencv4/opencv2/objdetect/aruco_dictionary.hpp:
 
@@ -473,6 +609,8 @@ CMakeFiles/blanketMaker.dir/main.cpp.o: main.cpp \
 /usr/local/include/opencv4/opencv2/flann/sampling.h:
 
 /usr/local/include/opencv4/opencv2/flann/index_testing.h:
+
+/usr/include/c++/11/bits/indirect_array.h:
 
 /usr/local/include/opencv4/opencv2/flann/autotuned_index.h:
 
@@ -510,6 +648,8 @@ CMakeFiles/blanketMaker.dir/main.cpp.o: main.cpp \
 
 /usr/local/include/opencv4/opencv2/flann/heap.h:
 
+/usr/include/c++/11/bits/stream_iterator.h:
+
 /usr/local/include/opencv4/opencv2/objdetect/barcode.hpp:
 
 /usr/local/include/opencv4/opencv2/flann/dist.h:
@@ -520,6 +660,10 @@ CMakeFiles/blanketMaker.dir/main.cpp.o: main.cpp \
 
 /usr/include/c++/11/bits/stl_multiset.h:
 
+json/include/nlohmann/ordered_map.hpp:
+
+/usr/include/c++/11/bits/gslice_array.h:
+
 /usr/local/include/opencv4/opencv2/objdetect/charuco_detector.hpp:
 
 /usr/local/include/opencv4/opencv2/highgui.hpp:
@@ -527,6 +671,8 @@ CMakeFiles/blanketMaker.dir/main.cpp.o: main.cpp \
 /usr/include/c++/11/bits/stl_set.h:
 
 /usr/include/c++/11/set:
+
+json/include/nlohmann/detail/string_escape.hpp:
 
 /usr/local/include/opencv4/opencv2/flann/nn_index.h:
 
@@ -556,9 +702,13 @@ CMakeFiles/blanketMaker.dir/main.cpp.o: main.cpp \
 
 /usr/include/c++/11/bits/stl_tree.h:
 
+json/include/nlohmann/thirdparty/hedley/hedley.hpp:
+
 /usr/local/include/opencv4/opencv2/imgcodecs.hpp:
 
 /usr/include/c++/11/map:
+
+json/include/nlohmann/json_fwd.hpp:
 
 /usr/local/include/opencv4/opencv2/dnn/dict.hpp:
 
@@ -566,7 +716,13 @@ CMakeFiles/blanketMaker.dir/main.cpp.o: main.cpp \
 
 /usr/local/include/opencv4/opencv2/dnn/dnn.hpp:
 
+json/include/nlohmann/detail/meta/call_std/end.hpp:
+
 /usr/local/include/opencv4/opencv2/flann/config.h:
+
+/usr/include/c++/11/bits/stl_numeric.h:
+
+json/include/nlohmann/detail/abi_macros.hpp:
 
 /usr/local/include/opencv4/opencv2/flann/defines.h:
 
@@ -604,11 +760,15 @@ CMakeFiles/blanketMaker.dir/main.cpp.o: main.cpp \
 
 /usr/local/include/opencv4/opencv2/core/neon_utils.hpp:
 
+/usr/include/c++/11/forward_list:
+
 /usr/local/include/opencv4/opencv2/core/cuda.inl.hpp:
 
 /usr/include/c++/11/pstl/glue_memory_defs.h:
 
 /usr/include/c++/11/backward/auto_ptr.h:
+
+/usr/include/c++/11/bits/valarray_array.tcc:
 
 /usr/include/c++/11/bits/atomic_lockfree_defines.h:
 
@@ -621,6 +781,8 @@ CMakeFiles/blanketMaker.dir/main.cpp.o: main.cpp \
 /usr/include/c++/11/ext/concurrence.h:
 
 /usr/include/c++/11/bits/allocated_ptr.h:
+
+/usr/include/c++/11/any:
 
 /usr/include/c++/11/bits/unique_ptr.h:
 
@@ -638,11 +800,15 @@ CMakeFiles/blanketMaker.dir/main.cpp.o: main.cpp \
 
 /usr/local/include/opencv4/opencv2/core/cvstd_wrapper.hpp:
 
+json/include/nlohmann/byte_container_with_subtype.hpp:
+
 /usr/include/strings.h:
 
 /usr/local/include/opencv4/opencv2/core/cvstd.hpp:
 
 /usr/include/c++/11/bits/vector.tcc:
+
+json/include/nlohmann/detail/input/json_sax.hpp:
 
 /usr/local/include/opencv4/opencv2/core/operations.hpp:
 
@@ -698,6 +864,8 @@ main.cpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
 
+/usr/include/c++/11/bits/fs_fwd.h:
+
 /usr/include/c++/11/bits/stl_bvector.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h:
@@ -730,6 +898,8 @@ main.cpp:
 
 /usr/include/c++/11/tr1/modified_bessel_func.tcc:
 
+/usr/include/c++/11/pstl/glue_numeric_defs.h:
+
 /usr/include/x86_64-linux-gnu/bits/locale.h:
 
 /usr/include/locale.h:
@@ -750,9 +920,13 @@ main.cpp:
 
 /usr/include/c++/11/cctype:
 
+json/include/nlohmann/detail/json_custom_base_class.hpp:
+
 /usr/local/include/opencv4/opencv2/dnn.hpp:
 
 /usr/include/c++/11/unordered_map:
+
+json/include/nlohmann/detail/input/input_adapters.hpp:
 
 /usr/include/c++/11/cfloat:
 
@@ -854,6 +1028,8 @@ main.cpp:
 
 /usr/include/c++/11/pstl/pstl_config.h:
 
+json/include/nlohmann/detail/meta/cpp_future.hpp:
+
 /usr/include/c++/11/cmath:
 
 /usr/include/c++/11/bits/allocator.h:
@@ -861,6 +1037,8 @@ main.cpp:
 /usr/local/include/opencv4/opencv2/flann/kdtree_single_index.h:
 
 /usr/include/c++/11/bits/char_traits.h:
+
+json/include/nlohmann/detail/macro_scope.hpp:
 
 /usr/include/asm-generic/errno-base.h:
 
@@ -874,11 +1052,17 @@ main.cpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
 
+/usr/include/c++/11/bits/forward_list.tcc:
+
 /usr/include/c++/11/chrono:
 
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
+
+json/include/nlohmann/detail/output/binary_writer.hpp:
+
+json/include/nlohmann/detail/json_pointer.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h:
 
@@ -898,6 +1082,8 @@ main.cpp:
 
 /usr/local/include/opencv4/opencv2/core.hpp:
 
+json/include/nlohmann/detail/hash.hpp:
+
 /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/long-double.h:
@@ -905,6 +1091,8 @@ main.cpp:
 /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
 
 /usr/include/c++/11/cwchar:
+
+/usr/include/c++/11/bits/forward_list.h:
 
 /usr/local/include/opencv4/opencv2/flann/saving.h:
 
@@ -915,6 +1103,8 @@ main.cpp:
 /usr/include/c++/11/bits/nested_exception.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
+
+json/include/nlohmann/detail/macro_unscope.hpp:
 
 /usr/local/include/opencv4/opencv2/core/version.hpp:
 
@@ -935,6 +1125,8 @@ main.cpp:
 /usr/include/c++/11/bits/std_mutex.h:
 
 /usr/include/c++/11/tr1/poly_laguerre.tcc:
+
+/usr/include/c++/11/iterator:
 
 /usr/include/x86_64-linux-gnu/bits/floatn.h:
 
@@ -967,6 +1159,8 @@ main.cpp:
 /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h:
 
 /usr/include/c++/11/bits/exception_defines.h:
+
+json/include/nlohmann/detail/meta/type_traits.hpp:
 
 /usr/local/include/opencv4/opencv2/flann/ground_truth.h:
 
@@ -1010,6 +1204,8 @@ main.cpp:
 
 /usr/include/ctype.h:
 
+json/include/nlohmann/detail/iterators/json_reverse_iterator.hpp:
+
 /usr/include/c++/11/bits/cpp_type_traits.h:
 
 /usr/include/c++/11/bits/stl_iterator_base_funcs.h:
@@ -1040,11 +1236,15 @@ main.cpp:
 
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
+/usr/include/c++/11/bits/fs_path.h:
+
 /usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
 
 /usr/include/alloca.h:
 
 /usr/include/c++/11/cstdio:
+
+json/include/nlohmann/thirdparty/hedley/hedley_undef.hpp:
 
 /usr/include/stdio.h:
 
@@ -1104,6 +1304,8 @@ main.cpp:
 
 /usr/include/c++/11/stdexcept:
 
+/usr/include/c++/11/codecvt:
+
 /usr/include/string.h:
 
 /usr/include/c++/11/bits/streambuf.tcc:
@@ -1124,6 +1326,10 @@ main.cpp:
 
 /usr/include/c++/11/cwctype:
 
+json/include/nlohmann/detail/iterators/iteration_proxy.hpp:
+
+json/include/nlohmann/detail/string_concat.hpp:
+
 /usr/include/c++/11/bits/streambuf_iterator.h:
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_inline.h:
@@ -1135,6 +1341,8 @@ main.cpp:
 /usr/include/c++/11/istream:
 
 /usr/include/c++/11/bits/istream.tcc:
+
+json/include/nlohmann/detail/input/binary_reader.hpp:
 
 /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h:
 
@@ -1184,6 +1392,12 @@ main.cpp:
 
 /usr/include/c++/11/tr1/riemann_zeta.tcc:
 
+json/include/nlohmann/detail/value_t.hpp:
+
+/usr/include/c++/11/bits/gslice.h:
+
+json/include/nlohmann/detail/conversions/from_json.hpp:
+
 /usr/local/include/opencv4/opencv2/core/cuda.hpp:
 
 /usr/local/include/opencv4/opencv2/opencv.hpp:
@@ -1227,6 +1441,8 @@ main.cpp:
 /usr/lib/gcc/x86_64-linux-gnu/11/include/syslimits.h:
 
 /usr/local/include/opencv4/opencv2/core/base.hpp:
+
+/usr/include/c++/11/bits/valarray_before.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/11/include/limits.h:
 

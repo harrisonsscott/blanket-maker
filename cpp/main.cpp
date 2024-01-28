@@ -4,11 +4,13 @@
 #include <string>
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
+#include <nlohmann/json.hpp>
 
 
 using namespace cv;
+using json = nlohmann::json;
 
-//Vec3 is BGR, not RGB
+//Vec3b is BGR, not RGB
 
 float getSimilarity(Vec3b color1, Vec3b color2){
 	return
@@ -17,7 +19,7 @@ float getSimilarity(Vec3b color1, Vec3b color2){
 		0.3 * std::pow(color1[2] - color2[2], 2);
 }
 
-Vec3b hexToRGB(char* hex){
+Vec3b hexToRGB(const char* hex){
 	int r, g, b;
 
 	sscanf(hex, "%02x%02x%02x", &r, &g, &b);
@@ -36,12 +38,23 @@ int main(int argc, char *argv[]){
 
 	Mat im = imread(argv[1]);
 
-	resize(im, im, Size(width, height));
-
 	if (im.empty()){
 		std::cout << "Can't find image!" << std::endl;
 		return -1;
 	}
+
+	std::vector<Vec3b> palette;
+
+	resize(im, im, Size(width, height));
+
+	std::ifstream file("palette.json");
+	json data = json::parse(file);
+
+	for (const auto& color: data["colors"]){
+		palette.push_back(hexToRGB(color.get<std::string>().c_str()));
+	}
+
+	std::cout << data["colors"] << std::endl;
 
 	for (int x = 0; x < im.rows; x++){
 		for (int y = 0; y < im.cols; y++ ){
