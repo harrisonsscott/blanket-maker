@@ -7,6 +7,22 @@ Dependencies:
 - [Nlohmann's JSON library](https://github.com/nlohmann/json)
 - [OpenCV](https://opencv.org/)
 
+Build Instructions:
+```bash
+cmake .
+make
+```
+
+Run With:
+```bash
+./blanketMaker IMAGE_FILE SIZE_X SIZE_Y
+```
+
+Example:
+```bash
+./blanketMaker rainbow.png 16 16
+```
+
 ## Python
 
 Dependencies:
