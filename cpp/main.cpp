@@ -39,7 +39,7 @@ Vec3b hexToRGB(const std::string& hex){
 
 int main(int argc, char *argv[]){
 	if (argc < 4){
-		std::cout << "main.py [image file] [output size x] [output size y]" << std::endl;
+		std::cout << "./blanketMaker [image file] [output size x] [output size y]" << std::endl;
 		return -1;
 	}
 
@@ -53,6 +53,11 @@ int main(int argc, char *argv[]){
 		return -1;
 	}
 
+	if (width <= 0 || height <= 0){
+		std::cout << "Invalid dimensions!" << std::endl;
+		return -1;
+	}
+
 	std::vector<Vec3b> palette;
 
 	resize(im, im, Size(width, height));
@@ -61,18 +66,13 @@ int main(int argc, char *argv[]){
 	json data = json::parse(file);
 
 	for (const auto& color: data["colors"]){
-		std::cout << color << std::endl;
-		std::cout << hexToRGB(color.get<std::string>().c_str()) << std::endl;
 		palette.push_back(hexToRGB(color.get<std::string>().c_str()));
 	}
-
-	std::cout << palette[3] << std::endl;
 
 	for (int x = 0; x < im.rows; x++){
 		for (int y = 0; y < im.cols; y++ ){
 			int similarity = 10000000;
 			Vec3b & color = im.at<Vec3b>(x,y);
-			std::cout << color << std::endl;
 			Vec3b selectedColor;
 			for (auto i: palette){
 				if (getSimilarity(color, i) < similarity){

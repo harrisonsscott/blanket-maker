@@ -33,6 +33,10 @@ if len(sys.argv) < 4:
 
 width, height = (int(sys.argv[2]), int(sys.argv[3]))
 
+if width <= 0 or height <= 0:
+	print("Invalid dimensions")
+	exit()
+
 im = Image.open(sys.argv[1]).resize((width, height)).convert("RGB")
 out = Image.new("RGBA", (width, height), 0xffffff)
 
