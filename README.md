@@ -18,21 +18,22 @@ Run With:
 ./blanketMaker IMAGE_FILE SIZE_X SIZE_Y
 ```
 
-Example:
-```bash
-./blanketMaker rainbow.png 16 16
-```
-
 ## Python
 
 Dependencies:
 - [Pillow](https://github.com/python-pillow/Pillow/)
 
 ## Example
+```bash
+./blanketMaker rainbow.png 10 10
+```
+
 Original
+
 ![][original]
 
 After
+
 ![][output]
 
 Using the palette:
