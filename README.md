@@ -7,16 +7,33 @@ Dependencies:
 - [Nlohmann's JSON library](https://github.com/nlohmann/json)
 - [OpenCV](https://opencv.org/)
 
+Build Instructions:
+```bash
+cmake .
+make
+```
+
+Run With:
+```bash
+./blanketMaker IMAGE_FILE SIZE_X SIZE_Y
+```
+
 ## Python
 
 Dependencies:
 - [Pillow](https://github.com/python-pillow/Pillow/)
 
 ## Example
+```bash
+./blanketMaker rainbow.png 10 10
+```
+
 Original
+
 ![][original]
 
 After
+
 ![][output]
 
 Using the palette:
