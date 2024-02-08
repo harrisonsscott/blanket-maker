@@ -6,6 +6,7 @@ import sys
 
 # first parameter: image file
 # second and third parameter: output image size
+# fourth: upscale image for better visibility
 # main.py image.png 10 10
 
 with open("palette.json", "r") as f:  # loads the palette
@@ -28,10 +29,15 @@ def hexToRGB(value):
 hexToRGB("#ff7700")
 
 if len(sys.argv) < 4:
-    print("main.py [image file] [output size x] [output size y]")
+    print("main.py [image file] [output size x] [output size y] [upscale image]")
     exit()
 
 width, height = (int(sys.argv[2]), int(sys.argv[3]))
+upscaleImage = False
+
+if len(sys.argv) > 4:
+    if sys.argv[4].lower() == "true" or sys.argv[4] == "1":
+        upscaleImage = True
 
 im = Image.open(sys.argv[1]).resize((width, height)).convert("RGB")
 out = Image.new("RGBA", (width, height), 0xffffff)
@@ -47,4 +53,11 @@ for x in range(width):
                 selectedColor[:3] = hexToRGB(color)
         out.putpixel((x, y), (selectedColor[0], selectedColor[1], selectedColor[2], 255))
 
-out.save('bar.png')
+if not upscaleImage:
+    out.save('output.png')
+else:
+    aspect = width/height
+    sizeX = math.floor(max(width * 16, 1024))
+    sizeY = math.floor(sizeX * aspect)
+    out.resize((sizeX, sizeY), resample=Image.BOX).save("output.png")
+
