@@ -2,6 +2,7 @@
 #include <fstream>
 #include <cmath>
 #include <string>
+#include <algorithm>
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
 #include <nlohmann/json.hpp>
@@ -39,13 +40,23 @@ Vec3b hexToRGB(const std::string& hex){
 
 int main(int argc, char *argv[]){
 	if (argc < 4){
-		std::cout << "./blanketMaker [image file] [output size x] [output size y]" << std::endl;
+		std::cout << "./blanketMaker [image file] [output size x] [output size y] [upscale image]" << std::endl;
 		return -1;
 	}
 
 	int width = std::stoi(argv[2]);
 	int height = std::stoi(argv[3]);
+	bool upscaleImage = false;
 
+	if (argc > 4){
+		for (char &c : argv[4]) {
+        	c = std::tolower(c);
+    	}
+
+		if (argv[4] == "true"){
+			upscaleImage = true;
+		}
+	}
 	Mat im = imread(argv[1]);
 
 	if (im.empty()){
@@ -84,7 +95,15 @@ int main(int argc, char *argv[]){
 			im.at<Vec3b>(Point(y,x)) = selectedColor;
 		}
 	}
+	
+	if (upscaleImage){
+		int aspect = width/height;
+		int sizeX = std::max(width * 16, 1024);
+		int sizeY = sizeX * aspect;
 
+		resize(im, im, Size(sizeX, sizeY));
+	}
+	
 	imwrite("bar.png", im);
 
 	return 0;
