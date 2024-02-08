@@ -39,6 +39,10 @@ if len(sys.argv) > 4:
     if sys.argv[4].lower() == "true" or sys.argv[4] == "1":
         upscaleImage = True
 
+if width <= 0 or height <= 0:
+	print("Invalid dimensions")
+	exit()
+
 im = Image.open(sys.argv[1]).resize((width, height)).convert("RGB")
 out = Image.new("RGBA", (width, height), 0xffffff)
 
