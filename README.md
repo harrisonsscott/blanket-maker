@@ -15,7 +15,7 @@ make
 
 Run With:
 ```bash
-./blanketMaker IMAGE_FILE SIZE_X SIZE_Y
+./blanketMaker IMAGE_FILE SIZE_X SIZE_Y UPSCALE_IMAGE
 ```
 
 ## Python
@@ -23,9 +23,15 @@ Run With:
 Dependencies:
 - [Pillow](https://github.com/python-pillow/Pillow/)
 
+Run With:
+```bash
+python3 main.py IMAGE_FILE SIZE_X SIZE_Y UPSCALE_IMAGE
+```
+
+
 ## Example
 ```bash
-./blanketMaker rainbow.png 10 10
+./blanketMaker rainbow.png 10 10 true
 ```
 
 Original
@@ -48,5 +54,6 @@ Using the palette:
 	]
 }
 ```
+
 [original]: <https://media.discordapp.net/attachments/1202064667799724065/1202067164140408903/rainbow.png>
 [output]: <https://media.discordapp.net/attachments/1202064667799724065/1202067164442669086/bar.png>
