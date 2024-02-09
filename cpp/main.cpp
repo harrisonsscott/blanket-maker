@@ -49,11 +49,12 @@ int main(int argc, char *argv[]){
 	bool upscaleImage = false;
 
 	if (argc > 4){
-		for (char &c : argv[4]) {
-        	c = std::tolower(c);
-    	}
+		std::string argv4 = std::string(argv[4]);
+		for (char &c : argv4) {
+        		c = std::tolower(c);
+	    	}
 
-		if (argv[4] == "true"){
+		if (argv4 == "true"){
 			upscaleImage = true;
 		}
 	}
@@ -91,19 +92,18 @@ int main(int argc, char *argv[]){
 					selectedColor = i;
 				}
 			}
-			std::cout << selectedColor << std::endl;
 			im.at<Vec3b>(Point(y,x)) = selectedColor;
 		}
 	}
-	
+
 	if (upscaleImage){
-		int aspect = width/height;
+		int aspect = height/width;
 		int sizeX = std::max(width * 16, 1024);
 		int sizeY = sizeX * aspect;
 
-		resize(im, im, Size(sizeX, sizeY));
+		resize(im, im, Size(sizeX, sizeY), 0, 0, INTER_NEAREST);
 	}
-	
+
 	imwrite("bar.png", im);
 
 	return 0;

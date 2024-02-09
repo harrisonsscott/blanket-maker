@@ -60,7 +60,7 @@ for x in range(width):
 if not upscaleImage:
     out.save('output.png')
 else:
-    aspect = width/height
+    aspect = height/width
     sizeX = math.floor(max(width * 16, 1024))
     sizeY = math.floor(sizeX * aspect)
     out.resize((sizeX, sizeY), resample=Image.BOX).save("output.png")
