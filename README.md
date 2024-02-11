@@ -7,8 +7,13 @@ Dependencies:
 - [Nlohmann's JSON library](https://github.com/nlohmann/json)
 - [OpenCV](https://opencv.org/)
 
+```bash
+sudo apt install libopencv-dev python3-opencv
+```
+
 Build Instructions:
 ```bash
+cd cpp
 cmake .
 make
 ```
