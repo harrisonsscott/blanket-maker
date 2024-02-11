@@ -40,23 +40,47 @@ Vec3b hexToRGB(const std::string& hex){
 
 int main(int argc, char *argv[]){
 	if (argc < 4){
-		std::cout << "./blanketMaker [image file] [output size x] [output size y] [upscale image]" << std::endl;
+		std::cout << "./blanketMaker [image file] [output size x] [output size y] <--output outputFile> <--palette paletteFile> <--upscale true> <--textfile filename>" << std::endl;
 		return -1;
 	}
 
 	int width = std::stoi(argv[2]);
 	int height = std::stoi(argv[3]);
 	bool upscaleImage = false;
+	std::string paletteFile = "palette.json";
+	std::string outputImage = "bar.png";
+	std::string textFile = "bar.txt";
+	
+	int iarg = 4;
+	while (iarg < argc ) {
+	  // Read current argument
+	  std::string argvi = std::string(argv[iarg]);
+	  
+	  if (iarg + 1 < argc && argvi == "--palette") {
+	    iarg++;
+	    paletteFile = argv[iarg];
+	  }
+	  if (iarg + 1 < argc && argvi == "--upscale") {
+	    iarg++;
+	    argvi = argv[iarg];
+	    for (char &c : argvi) {
+	      c = std::tolower(c);
+	    }
+	    if (argvi == "true"){
+	      upscaleImage = true;
+	    }
+	  }	  
+	  if (iarg + 1 < argc && argvi == "--textfile") {
+	    iarg++;
+	    textFile = argv[iarg];
+	  }
+	  if (iarg + 1 < argc && argvi == "--output") {
+	    iarg++;
+	    outputImage = argv[iarg];
+	  }	  
 
-	if (argc > 4){
-		std::string argv4 = std::string(argv[4]);
-		for (char &c : argv4) {
-        		c = std::tolower(c);
-	    	}
-
-		if (argv4 == "true"){
-			upscaleImage = true;
-		}
+	  // Move on to next argument
+	  iarg++;
 	}
 	Mat im = imread(argv[1]);
 
@@ -74,7 +98,7 @@ int main(int argc, char *argv[]){
 
 	resize(im, im, Size(width, height));
 
-	std::ifstream file("palette.json");
+	std::ifstream file(paletteFile);
 	json data = json::parse(file);
 
 	for (const auto& color: data["colors"]){
@@ -104,7 +128,7 @@ int main(int argc, char *argv[]){
 		resize(im, im, Size(sizeX, sizeY), 0, 0, INTER_NEAREST);
 	}
 
-	imwrite("bar.png", im);
+	imwrite(outputImage, im);
 
 	return 0;
 }
