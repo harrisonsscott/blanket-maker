@@ -9,6 +9,8 @@
 *.json
 *.cmake
 
+./cpp/blanketMaker
+
 [Mm]ake[Ff]ile.*
 ./cpp/CMakeCache.txt
 ./cpp/CMakeFiles/
