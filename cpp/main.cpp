@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/core.hpp>
+#include <sys/stat.h>
 #include "json.hpp"
 
 
@@ -47,9 +48,10 @@ int main(int argc, char *argv[]){
 	int width = std::stoi(argv[2]);
 	int height = std::stoi(argv[3]);
 	bool upscaleImage = false;
-	std::string paletteFile = "palette.json";
-	std::string outputImage = "bar.png";
-	std::string textFile = "bar.txt";
+
+	char* paletteFile = "palette.json";
+	char* outputImage = "bar.png";
+	char* textFile = "bar.txt";
 	
 	int iarg = 4;
 	while (iarg < argc ) {
@@ -82,7 +84,23 @@ int main(int argc, char *argv[]){
 	  // Move on to next argument
 	  iarg++;
 	}
+
 	Mat im = imread(argv[1]);
+
+	// check if files exist
+	struct stat buffer;
+	bool filesExist = true;
+
+	for (const auto file: {paletteFile, outputImage, textFile}){
+		if (stat(file, &buffer) != 0){
+			std::cout << "file " << file << " doesn't exist!" << std::endl;
+			filesExist = false;
+		}
+	}
+
+	if (!filesExist){
+		return -1;
+	}
 
 	if (im.empty()){
 		std::cout << "Can't find image!" << std::endl;
@@ -102,20 +120,24 @@ int main(int argc, char *argv[]){
 	json data = json::parse(file);
 
 	for (const auto& color: data["colors"]){
+		// generate a palette from the JSON file
 		palette.push_back(hexToRGB(color.get<std::string>().c_str()));
 	}
 
+	// loop over all pixels
 	for (int x = 0; x < im.rows; x++){
 		for (int y = 0; y < im.cols; y++ ){
 			int similarity = 10000000;
 			Vec3b & color = im.at<Vec3b>(x,y);
 			Vec3b selectedColor;
 			for (auto i: palette){
+				// select a color in the palette that's the closest to the current pixel
 				if (getSimilarity(color, i) < similarity){
 					similarity = getSimilarity(color, i);
 					selectedColor = i;
 				}
 			}
+			// set pixel color
 			im.at<Vec3b>(Point(y,x)) = selectedColor;
 		}
 	}
