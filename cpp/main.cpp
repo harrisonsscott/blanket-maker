@@ -91,7 +91,7 @@ int main(int argc, char *argv[]){
 	struct stat buffer;
 	bool filesExist = true;
 
-	for (const auto file: {paletteFile, outputImage, textFile}){
+	for (const auto file: {paletteFile}){
 		if (stat(file, &buffer) != 0){
 			std::cout << "file " << file << " doesn't exist!" << std::endl;
 			filesExist = false;
@@ -119,28 +119,48 @@ int main(int argc, char *argv[]){
 	std::ifstream file(paletteFile);
 	json data = json::parse(file);
 
-	for (const auto& color: data["colors"]){
-		// generate a palette from the JSON file
-		palette.push_back(hexToRGB(color.get<std::string>().c_str()));
+	// loop over all pixels
+
+	std::string outputText = "";
+
+	
+	for (int i = 0; i < data["colors"].size(); i++)
+	{
+		outputText += data["colors"][i].get<std::string>() + ": " + std::to_string(i) + "\n";
+		palette.push_back(hexToRGB(data["colors"][i].get<std::string>().c_str()));
 	}
 
-	// loop over all pixels
+
 	for (int x = 0; x < im.rows; x++){
+		outputText += "\nRow #" + std::to_string(x) + ": ";
 		for (int y = 0; y < im.cols; y++ ){
 			int similarity = 10000000;
 			Vec3b & color = im.at<Vec3b>(x,y);
 			Vec3b selectedColor;
+			int v = 0;
+			int selectedColorIndex = 0;
 			for (auto i: palette){
 				// select a color in the palette that's the closest to the current pixel
 				if (getSimilarity(color, i) < similarity){
 					similarity = getSimilarity(color, i);
 					selectedColor = i;
+					v += 1;
+					selectedColorIndex = v;
 				}
 			}
+			outputText += std::to_string(selectedColorIndex) + ",";
 			// set pixel color
 			im.at<Vec3b>(Point(y,x)) = selectedColor;
 		}
 	}
+
+	// write to text file
+	std::ofstream outputFile(textFile);
+
+    if (outputFile.is_open()) {
+        outputFile << outputText;
+        outputFile.close();
+    }
 
 	if (upscaleImage){
 		int aspect = height/width;
