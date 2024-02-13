@@ -9,13 +9,13 @@
 *.json
 *.cmake
 
-./cpp/blanketMaker
+blanketMaker
 
-[Mm]ake[Ff]ile.*
+CMakeCache.txt
+CMakeFiles/
+
+[Mm]ake[Ff]ile
 ./cpp/CMakeCache.txt
-./cpp/CMakeFiles/
 ./cpp/cmake_install.cmake
-./cpp/[Mm]ake[Ff]ile
 ./cpp/json/
-./cpp/CMakeFiles/
 
