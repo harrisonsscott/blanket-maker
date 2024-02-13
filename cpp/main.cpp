@@ -148,7 +148,7 @@ int main(int argc, char *argv[]){
 					selectedColorIndex = v;
 				}
 			}
-			outputText += std::to_string(selectedColorIndex) + ",";
+			outputText += std::to_string(selectedColorIndex) + " ";
 			// set pixel color
 			im.at<Vec3b>(Point(y,x)) = selectedColor;
 		}
