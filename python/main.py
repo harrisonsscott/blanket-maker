@@ -7,13 +7,11 @@ import sys
 # first parameter: image file
 # second and third parameter: output image size
 # fourth: upscale image for better visibility
-# main.py image.png 10 10
 
 with open("palette.json", "r") as f:  # loads the palette
     data = json.load(f)
     palette = data["colors"]
-
-
+	
 def getSimilarity(color1, color2):  # calculates the similarity between 2 numbers
     return (
             0.3 * math.pow(color1[0] - color2[0], 2) +
@@ -46,16 +44,32 @@ if width <= 0 or height <= 0:
 im = Image.open(sys.argv[1]).resize((width, height)).convert("RGB")
 out = Image.new("RGBA", (width, height), 0xffffff)
 
+outputText = ""
+
+index = 0
+for color in palette:
+  outputText += color + ": " + str(index)  + "\n";
+  index += 1
+
 for x in range(width):
+    outputText += "\nRow #" + str(x) + ": ";
     for y in range(height):
         r, g, b = im.getpixel((x, y))
         selectedColor = [0, 0, 0, 1000000]  # the 4th value is the similarity, not the alpha
+        v = 0
+        i = 0
         for color in palette:
             similarity = getSimilarity((r, g, b), hexToRGB(color))
             if selectedColor[3] > similarity:
+                i += 1
                 selectedColor[3] = similarity
                 selectedColor[:3] = hexToRGB(color)
+                v = i
+            outputText += f"{str(v)} "
         out.putpixel((x, y), (selectedColor[0], selectedColor[1], selectedColor[2], 255))
+
+with open("bar.txt", "w") as f:
+  f.write(outputText)
 
 if not upscaleImage:
     out.save('output.png')
@@ -64,4 +78,3 @@ else:
     sizeX = math.floor(max(width * 16, 1024))
     sizeY = math.floor(sizeX * aspect)
     out.resize((sizeX, sizeY), resample=Image.BOX).save("output.png")
-
