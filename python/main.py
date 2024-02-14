@@ -28,7 +28,8 @@ def hexToRGB(value):
 
 
 if len(sys.argv) < 4:
-    print("main.py [image file] [output size x] [output size y] [upscale image]")
+    print("main.py [image file] [output size x] [output size y] <--output outputFile> <--palette paletteFile> "
+          "<--upscale true> <--textfile filename>")
     exit()
 
 width, height = (int(sys.argv[2]), int(sys.argv[3]))
@@ -72,21 +73,19 @@ for color in palette:
     outputText += color + ": " + str(index) + "\n";
     index += 1
 
-for x in range(width):
-    outputText += "\nRow #" + str(x) + ": ";
-    for y in range(height):
+for y in range(height):
+    outputText += "\nRow #" + str(y) + ": ";
+    for x in range(width):
         r, g, b = im.getpixel((x, y))
         selectedColor = [0, 0, 0, 1000000]  # the 4th value is the similarity, not the alpha
-        v = 0
-        i = 0
-        for color in palette:
-            similarity = getSimilarity((r, g, b), hexToRGB(color))
+        selectedIndex = 0
+        for i in range(len(palette)):
+            similarity = getSimilarity((r, g, b), hexToRGB(palette[i]))
             if selectedColor[3] > similarity:
-                i += 1
                 selectedColor[3] = similarity
-                selectedColor[:3] = hexToRGB(color)
-                v = i
-            outputText += f"{str(v)} "
+                selectedColor[:3] = hexToRGB(palette[i])
+                selectedIndex = i
+        outputText += f"{str(selectedIndex)} "
         out.putpixel((x, y), (selectedColor[0], selectedColor[1], selectedColor[2], 255))
 
 with open(textFile, "w") as f:
