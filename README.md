@@ -8,7 +8,7 @@ Dependencies:
 - [OpenCV](https://opencv.org/)
 
 ```bash
-sudo apt install libopencv-dev python3-opencv
+sudo apt install libopencv-dev
 ```
 
 Build Instructions:
@@ -20,7 +20,7 @@ make
 
 Run With:
 ```bash
-./blanketMaker IMAGE_FILE SIZE_X SIZE_Y UPSCALE_IMAGE
+./blanketMaker [image file] [output size x] [output size y] <--output outputFile> <--palette paletteFile> <--upscale true/false> <--textfile filename>
 ```
 
 ## Python
@@ -30,13 +30,13 @@ Dependencies:
 
 Run With:
 ```bash
-python3 main.py IMAGE_FILE SIZE_X SIZE_Y UPSCALE_IMAGE
+python3 main.py [image file] [output size x] [output size y] <--output outputFile> <--palette paletteFile> <--upscale true/false> <--textfile filename>
 ```
 
 
 ## Example
 ```bash
-./blanketMaker rainbow.png 10 10 true
+./blanketMaker rainbow.png 10 10 --upscale true
 ```
 
 Original
