@@ -49,15 +49,15 @@ int main(int argc, char *argv[]){
 	int height = std::stoi(argv[3]);
 	bool upscaleImage = false;
 
-	char* paletteFile = "palette.json";
-	char* outputImage = "bar.png";
-	char* textFile = "bar.txt";
-	
+	std::string paletteFile = "palette.json";
+	std::string outputImage = "bar.png";
+	std::string textFile = "bar.txt";
+
 	int iarg = 4;
 	while (iarg < argc ) {
 	  // Read current argument
 	  std::string argvi = std::string(argv[iarg]);
-	  
+
 	  if (iarg + 1 < argc && argvi == "--palette") {
 	    iarg++;
 	    paletteFile = argv[iarg];
@@ -92,7 +92,7 @@ int main(int argc, char *argv[]){
 	bool filesExist = true;
 
 	for (const auto file: {paletteFile}){
-		if (stat(file, &buffer) != 0){
+		if (stat(file.c_str(), &buffer) != 0){
 			std::cout << "file " << file << " doesn't exist!" << std::endl;
 			filesExist = false;
 		}
