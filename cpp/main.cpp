@@ -48,6 +48,7 @@ int main(int argc, char *argv[]){
 	int width = std::stoi(argv[2]);
 	int height = std::stoi(argv[3]);
 	bool upscaleImage = false;
+	bool autoPalette = false;
 
 	std::string paletteFile = "palette.json";
 	std::string outputImage = "bar.png";
@@ -55,51 +56,59 @@ int main(int argc, char *argv[]){
 
 	int iarg = 4;
 	while (iarg < argc ) {
-	  // Read current argument
-	  std::string argvi = std::string(argv[iarg]);
+		// Read current argument
+		std::string argvi = std::string(argv[iarg]);
 
-	  if (iarg + 1 < argc && argvi == "--palette") {
-	    iarg++;
-	    paletteFile = argv[iarg];
-	  }
-	  if (iarg + 1 < argc && argvi == "--upscale") {
-	    iarg++;
-	    argvi = argv[iarg];
-	    for (char &c : argvi) {
-	      c = std::tolower(c);
-	    }
-	    if (argvi == "true"){
-	      upscaleImage = true;
-	    }
-	  }	  
-	  if (iarg + 1 < argc && argvi == "--textfile") {
-	    iarg++;
-	    textFile = argv[iarg];
-	  }
-	  if (iarg + 1 < argc && argvi == "--output") {
-	    iarg++;
-	    outputImage = argv[iarg];
-	  }	  
+		if (iarg + 1 < argc && argvi == "--palette") {
+			iarg++;
+			argvi = argv[iarg];
 
-	  // Move on to next argument
-	  iarg++;
+			if (argvi == "auto"){
+				autoPalette = true;
+			} else {
+				paletteFile = argv[iarg];
+			}
+		}
+		if (iarg + 1 < argc && argvi == "--upscale") {
+			iarg++;
+			argvi = argv[iarg];
+			for (char &c : argvi) {
+				c = std::tolower(c);
+			}
+			if (argvi == "true"){
+			upscaleImage = true;
+			}
+		}	  
+		if (iarg + 1 < argc && argvi == "--textfile") {
+			iarg++;
+			textFile = argv[iarg];
+		}
+		if (iarg + 1 < argc && argvi == "--output") {
+			iarg++;
+			outputImage = argv[iarg];
+		}	  
+
+		// Move on to next argument
+		iarg++;
 	}
 
 	Mat im = imread(argv[1]);
 
-	// check if files exist
-	struct stat buffer;
-	bool filesExist = true;
+	if (!autoPalette){
+		// check if files exist
+		struct stat buffer;
+		bool filesExist = true;
 
-	for (const auto file: {paletteFile}){
-		if (stat(file.c_str(), &buffer) != 0){
-			std::cout << "file " << file << " doesn't exist!" << std::endl;
-			filesExist = false;
+		for (const auto file: {paletteFile}){
+			if (stat(file.c_str(), &buffer) != 0){
+				std::cout << "file " << file << " doesn't exist!" << std::endl;
+				filesExist = false;
+			}
 		}
-	}
 
-	if (!filesExist){
-		return -1;
+		if (!filesExist){
+			return -1;
+		}
 	}
 
 	if (im.empty()){
@@ -116,21 +125,38 @@ int main(int argc, char *argv[]){
 
 	resize(im, im, Size(width, height));
 
-	std::ifstream file(paletteFile);
-	json data = json::parse(file);
-
-	// loop over all pixels
-
 	std::string outputText = "";
 
-	
-	for (int i = 0; i < data["colors"].size(); i++)
-	{
-		outputText += data["colors"][i].get<std::string>() + ": " + std::to_string(i) + "\n";
-		palette.push_back(hexToRGB(data["colors"][i].get<std::string>().c_str()));
+	if (!autoPalette){
+		std::ifstream file(paletteFile);
+		json data = json::parse(file);
+
+		for (int i = 0; i < data["colors"].size(); i++)
+		{
+			outputText += data["colors"][i].get<std::string>() + ": " + std::to_string(i) + "\n";
+			palette.push_back(hexToRGB(data["colors"][i].get<std::string>().c_str()));
+		}
+
+	} else {
+		palette.push_back(im.at<Vec3b>(0,0));
+		for (int x = 0; x < im.rows; x++){
+			for (int y = 0; y < im.cols; y++ ){
+				Vec3b & color = im.at<Vec3b>(x,y);
+				int similarity = 10000000;
+				for (int c = 0; c < palette.size(); c++){
+					if (getSimilarity(color, palette[c]) < similarity){
+						similarity = getSimilarity(color, palette[c]);
+					}
+				}
+
+				if (similarity > 800){
+					palette.push_back(color);
+				}
+			}
+		}
 	}
 
-
+	// loop over all pixels
 	for (int x = 0; x < im.rows; x++){
 		outputText += "\nRow #" + std::to_string(x) + ": ";
 		for (int y = 0; y < im.cols; y++ ){
