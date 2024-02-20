@@ -39,6 +39,17 @@ Vec3b hexToRGB(const std::string& hex){
 	return Vec3b(hexToInt(bstring), hexToInt(gstring), hexToInt(rstring));
 }
 
+std::string RGBToHex(Vec3b color){
+	int n;
+   char r[4];
+   char g[4];
+   char b[4];
+   sprintf(b, "%X", color[0]);
+   sprintf(g, "%X", color[1]);
+   sprintf(r, "%X", color[2]);
+   return std::string("#") + r + g + b;
+}
+
 int main(int argc, char *argv[]){
 	if (argc < 4){
 		std::cout << "./blanketMaker [image file] [output size x] [output size y] <--output outputFile> <--palette paletteFile> <--upscale true> <--textfile filename>" << std::endl;
@@ -49,6 +60,7 @@ int main(int argc, char *argv[]){
 	int height = std::stoi(argv[3]);
 	bool upscaleImage = false;
 	bool autoPalette = false;
+	int autoPaletteAmount;
 
 	std::string paletteFile = "palette.json";
 	std::string outputImage = "bar.png";
@@ -65,6 +77,8 @@ int main(int argc, char *argv[]){
 
 			if (argvi == "auto"){
 				autoPalette = true;
+				iarg++;
+				autoPaletteAmount = std::stoi(argv[iarg]);
 			} else {
 				paletteFile = argv[iarg];
 			}
@@ -153,6 +167,10 @@ int main(int argc, char *argv[]){
 					palette.push_back(color);
 				}
 			}
+		}
+
+		for (int i = 0; i < palette.size(); i++){
+			outputText += RGBToHex(palette[i]) + ": " + std::to_string(i) + "\n";
 		}
 	}
 
