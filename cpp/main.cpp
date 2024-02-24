@@ -92,7 +92,7 @@ int main(int argc, char *argv[]){
 			if (argvi == "true"){
 			upscaleImage = true;
 			}
-		}	  
+		}
 		if (iarg + 1 < argc && argvi == "--textfile") {
 			iarg++;
 			textFile = argv[iarg];
@@ -100,7 +100,7 @@ int main(int argc, char *argv[]){
 		if (iarg + 1 < argc && argvi == "--output") {
 			iarg++;
 			outputImage = argv[iarg];
-		}	  
+		}
 
 		// Move on to next argument
 		iarg++;
@@ -163,14 +163,15 @@ int main(int argc, char *argv[]){
 					}
 				}
 
-				if (similarity > 800){
+				if (similarity > 800 && autoPaletteAmount > 1){
+					autoPaletteAmount -= 1;
 					palette.push_back(color);
 				}
 			}
 		}
 
 		for (int i = 0; i < palette.size(); i++){
-			outputText += RGBToHex(palette[i]) + ": " + std::to_string(i) + "\n";
+			outputText += RGBToHex(palette[i]) + ": " + std::to_string(i+1) + "\n";
 		}
 	}
 
