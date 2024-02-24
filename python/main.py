@@ -14,6 +14,9 @@ outputImage = "bar.png"
 textFile = "bar.txt"
 upscaleImage = False
 
+autoPalette = False
+autoPaletteAmount = 0
+
 
 def getSimilarity(color1, color2):  # calculates the similarity between 2 numbers
     return (
@@ -25,6 +28,10 @@ def getSimilarity(color1, color2):  # calculates the similarity between 2 number
 def hexToRGB(value):
     value = value.replace("#", "")
     return int(value[:2], 16), int(value[2:4], 16), int(value[4:6], 16)
+
+
+def RGBToHex(color):
+    return '#{:02x}{:02x}{:02x}'.format(color[0], color[1], color[2])
 
 
 if len(sys.argv) < 4:
@@ -47,6 +54,11 @@ while iarg < len(sys.argv):
     if iarg + 1 < len(sys.argv) and sys.argv[iarg] == "--palette":
         iarg += 1
         paletteFile = sys.argv[iarg]
+        if paletteFile == "auto":
+            autoPalette = True
+            iarg += 1
+            autoPaletteAmount = int(sys.argv[iarg])
+
     if iarg + 1 < len(sys.argv) and sys.argv[iarg] == "--upscale":
         iarg += 1
         if sys.argv[iarg].lower() == "true":
@@ -62,10 +74,22 @@ while iarg < len(sys.argv):
 im = Image.open(sys.argv[1]).resize((width, height)).convert("RGB")
 out = Image.new("RGBA", (width, height), 0xffffff)
 
-with open(paletteFile, "r") as f:  # loads the palette
-    data = json.load(f)
-    palette = data["colors"]
-
+if not autoPalette:
+    with open(paletteFile, "r") as f:  # loads the palette
+        data = json.load(f)
+        palette = data["colors"]
+else:
+    palette = []
+    for y in range(height):
+        for x in range(width):
+            r, g, b = im.getpixel((x, y))
+            similarity = 100000
+            for color in palette:
+                if getSimilarity((r, g, b), hexToRGB(color)) < similarity:
+                    similarity = getSimilarity((r, g, b), hexToRGB(color))
+            if similarity > 800 and autoPaletteAmount > 0:
+                autoPaletteAmount -= 1
+                palette.append(RGBToHex((r, g, b)))
 outputText = ""
 
 index = 0
