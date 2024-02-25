@@ -22,7 +22,7 @@ Run With:
 ```bash
 ./blanketMaker [image file] [output size x] [output size y] <--output outputFile> <--palette paletteFile> <--upscale true/false> <--textfile filename>
 ```
-You can also use "auto" instead of specifying a json file for the palette parameter followed by the palette size to automatically generate a palette.
+For both c++ and python, you can also use "auto" instead of specifying a json file for the palette parameter followed by the palette size to automatically generate a palette.
 
 Example
 ```bash
