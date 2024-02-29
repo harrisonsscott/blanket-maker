@@ -182,17 +182,24 @@ int main(int argc, char *argv[]){
 			int similarity = 10000000;
 			Vec3b & color = im.at<Vec3b>(x,y);
 			Vec3b selectedColor;
-			int v = 0;
 			int selectedColorIndex = 0;
-			for (auto i: palette){
-				// select a color in the palette that's the closest to the current pixel
-				if (getSimilarity(color, i) < similarity){
-					similarity = getSimilarity(color, i);
-					selectedColor = i;
-					v += 1;
-					selectedColorIndex = v;
+
+			for (int i = 0; i < palette.size(); i++){
+				if (getSimilarity(color, palette[i]) < similarity){
+					similarity = getSimilarity(color, palette[i]);
+					selectedColor = palette[i];
+					selectedColorIndex = i;
 				}
 			}
+			// for (auto i: palette){
+			// 	// select a color in the palette that's the closest to the current pixel
+			// 	if (getSimilarity(color, i) < similarity){
+			// 		similarity = getSimilarity(color, i);
+			// 		selectedColor = i;
+			// 		v += 1;
+			// 		selectedColorIndex = v;
+			// 	}
+			// }
 			outputText += std::to_string(selectedColorIndex) + " ";
 			// set pixel color
 			im.at<Vec3b>(Point(y,x)) = selectedColor;
