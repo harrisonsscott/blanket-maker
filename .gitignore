@@ -6,7 +6,6 @@
 *.jpeg
 *.gif
 *.exe
-*.json
 *.cmake
 *.txt
 
