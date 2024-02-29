@@ -66,5 +66,25 @@ Using the palette:
 }
 ```
 
+A text file is also made that makes it easier to follow the colors when making the blanket.
+```txt
+#ff0000: 0
+#ffff00: 1
+#00ff00: 2
+#00ffff: 3
+#0000ff: 4
+
+Row #0: 2 2 2 3 4 4 4 4 4 4 
+Row #1: 1 2 2 2 2 4 4 4 4 4 
+Row #2: 1 1 1 2 2 2 3 4 4 4 
+Row #3: 1 1 1 1 2 2 2 3 4 4 
+Row #4: 1 1 1 1 1 2 2 2 3 4 
+Row #5: 1 1 1 1 1 1 2 2 2 3 
+Row #6: 1 1 1 1 1 1 1 2 2 2 
+Row #7: 0 1 1 1 1 1 1 1 2 2 
+Row #8: 0 0 1 1 1 1 1 1 1 2 
+Row #9: 0 0 0 1 1 1 1 1 1 1 
+```
+
 [original]: <https://media.discordapp.net/attachments/1202064667799724065/1202067164140408903/rainbow.png>
 [output]: <https://media.discordapp.net/attachments/1202064667799724065/1202067164442669086/bar.png>
