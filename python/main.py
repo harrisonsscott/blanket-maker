@@ -12,6 +12,7 @@ import sys
 paletteFile = "palette.json"
 outputImage = "bar.png"
 textFile = "bar.txt"
+image = ""
 upscaleImage = False
 
 autoPalette = False
@@ -39,17 +40,13 @@ if len(sys.argv) < 4:
           "<--upscale true> <--textfile filename>")
     exit()
 
-width, height = (int(sys.argv[2]), int(sys.argv[3]))
-
-if len(sys.argv) > 4:
-    if sys.argv[4].lower() == "true" or sys.argv[4] == "1":
-        upscaleImage = True
+width, height = (int(sys.argv[1]), int(sys.argv[2]))
 
 if width <= 0 or height <= 0:
     print("Invalid dimensions")
     exit()
 
-iarg = 4
+iarg = 3
 while iarg < len(sys.argv):
     if iarg + 1 < len(sys.argv) and sys.argv[iarg] == "--palette":
         iarg += 1
@@ -59,6 +56,9 @@ while iarg < len(sys.argv):
             iarg += 1
             autoPaletteAmount = int(sys.argv[iarg])
 
+    if iarg + 1 < len(sys.argv) and sys.argv[iarg] == "--image":
+        iarg += 1
+        image = sys.argv[iarg]
     if iarg + 1 < len(sys.argv) and sys.argv[iarg] == "--upscale":
         iarg += 1
         if sys.argv[iarg].lower() == "true":
@@ -71,7 +71,7 @@ while iarg < len(sys.argv):
         paletteFile = sys.argv[iarg]
     iarg += 1
 
-im = Image.open(sys.argv[1]).resize((width, height)).convert("RGB")
+im = Image.open(image).resize((width, height)).convert("RGB")
 out = Image.new("RGBA", (width, height), 0xffffff)
 
 if not autoPalette:
