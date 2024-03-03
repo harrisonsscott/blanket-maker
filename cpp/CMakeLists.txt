@@ -16,4 +16,7 @@ set(DFFMPEG ON)
 set(DWITH_OPENCL ON)
 set(DHAVE_FFMPEG ON)
 
+# debug mode
+#set(DCMAKE_BUILD_TYPE Debug)
+
 include_directories(./json/include)

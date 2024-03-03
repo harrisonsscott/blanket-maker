@@ -52,12 +52,12 @@ std::string RGBToHex(Vec3b color){
 
 int main(int argc, char *argv[]){
 	if (argc < 4){
-		std::cout << "./blanketMaker [image file] [output size x] [output size y] <--output outputFile> <--palette paletteFile> <--upscale true> <--textfile filename>" << std::endl;
+		std::cout << "./blanketMaker [output size x] [output size y] <--image imageFile>  <--output outputFile> <--palette paletteFile> <--upscale true> <--textfile filename>" << std::endl;
 		return -1;
 	}
 
-	int width = std::stoi(argv[2]);
-	int height = std::stoi(argv[3]);
+	int width = std::stoi(argv[1]);
+	int height = std::stoi(argv[2]);
 	bool upscaleImage = false;
 	bool autoPalette = false;
 	int autoPaletteAmount;
@@ -65,11 +65,17 @@ int main(int argc, char *argv[]){
 	std::string paletteFile = "palette.json";
 	std::string outputImage = "bar.png";
 	std::string textFile = "bar.txt";
+	std::string image = "";
 
-	int iarg = 4;
+	int iarg = 3;
 	while (iarg < argc ) {
 		// Read current argument
 		std::string argvi = std::string(argv[iarg]);
+
+		if (iarg + 1 < argc && argvi == "--image") {
+			iarg++;
+			image = argv[iarg];
+		}
 
 		if (iarg + 1 < argc && argvi == "--palette") {
 			iarg++;
@@ -106,7 +112,7 @@ int main(int argc, char *argv[]){
 		iarg++;
 	}
 
-	Mat im = imread(argv[1]);
+	Mat im = imread(image);
 
 	if (!autoPalette){
 		// check if files exist
