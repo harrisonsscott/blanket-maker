@@ -36,7 +36,7 @@ def RGBToHex(color):
 
 
 if len(sys.argv) < 4:
-    print("main.py [image file] [output size x] [output size y] <--output outputFile> <--palette paletteFile> "
+    print("main.py [output size x] [output size y] <--image imageFile> <--output outputFile> <--palette paletteFile> "
           "<--upscale true> <--textfile filename>")
     exit()
 
