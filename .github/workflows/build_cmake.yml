@@ -31,3 +31,10 @@ jobs:
         cd cpp
         cmake .
         make
+        
+    - name: Tests
+      run: |
+        cp cpp
+        ./blanketMaker 20 20 --random 0 --upscale true
+        ./blanketMaker 20 20 --symm 0 --upscale true
+        ./blanketMaker 20 20 --skew 0 --upscale true
