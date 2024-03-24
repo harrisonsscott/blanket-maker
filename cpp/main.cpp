@@ -149,17 +149,65 @@ int main(int argc, char *argv[]){
 	  return -1;
 	}
 
-	if (random || symm || skew) {
-	  Mat im(width, height ,CV_8UC3);
+	std::vector<Vec3b> palette;
 	
-	  for (int x = 0; x < im.rows; x++){
-	    for (int y = 0; y < im.cols; y++ ){
+	std::string outputText = "";
+	if (!autoPalette){
+		std::ifstream file(paletteFile);
+		json data = json::parse(file);
 
-	      Vec3b selectedColor;
-	      selectedColor = (x % 2 == 0) ? Vec3b(x*10,x*10,x*10) : Vec3b(128,128,128);
-	      im.at<Vec3b>(Point(y,x)) = selectedColor;		
+		for (int i = 0; i < data["colors"].size(); i++)
+		{
+			outputText += data["colors"][i].get<std::string>() + ": " + std::to_string(i) + "\n";
+			palette.push_back(hexToRGB(data["colors"][i].get<std::string>().c_str()));
+		}
+
+	}
+
+	Mat im(width, height ,CV_8UC3);
+	if (random || symm || skew) {
+
+	  int N = palette.size();
+	  if (N < 1) {
+	    std::cout << "Palette empty for random/symm/skew pattern" << std::endl;
+	    return -1;
+	  }
+	  Vec3b selectedColor;
+	  if (random) {
+	    for (int x = 0; x < im.rows; x++){
+	      for (int y = 0; y < im.cols; y++ ){
+		selectedColor = palette[ rand() % N ];
+		im.at<Vec3b>(Point(y,x)) = selectedColor;		
+	      }
 	    }
 	  }
+	  if (symm) {
+	    for (int x = 0; x < im.rows; x++){
+	      for (int y = x; y < im.cols; y++ ){
+		selectedColor = palette[ rand() % N ];
+		im.at<Vec3b>(Point(y,x)) = selectedColor;
+		im.at<Vec3b>(Point(x,y)) = selectedColor;
+	      }
+	    }
+	  }
+	  if (skew) {
+	    if (N % 2 == 0) {
+	      std::cout << "Palette must have odd number of colors for skew pattern" << std::endl;
+	      return -1;	      
+	    }
+	    for (int x = 0; x < im.rows; x++){
+	      for (int y = x; y < im.cols; y++ ){
+		int index = rand() % N;
+		selectedColor = palette[ index ];
+		if (x == y)
+		  im.at<Vec3b>(Point(x,x)) = selectedColor;
+		else {
+		  im.at<Vec3b>(Point(x,y)) = selectedColor;
+		  im.at<Vec3b>(Point(y,x)) = palette[ N-index-1 ];
+		}
+	      }
+	    }
+	  }	  
 	
 	  if (upscaleImage){
 	    int aspect = height/width;
@@ -174,7 +222,7 @@ int main(int argc, char *argv[]){
 	  return 0;
 	}
 	
-	Mat im = imread(image);
+	im = imread(image);
 
 	if (im.empty()){
 		std::cout << "Can't find image!" << std::endl;
@@ -198,23 +246,9 @@ int main(int argc, char *argv[]){
 		}
 	}
 
-	std::vector<Vec3b> palette;
-
 	resize(im, im, Size(width, height));
 
-	std::string outputText = "";
-
-	if (!autoPalette){
-		std::ifstream file(paletteFile);
-		json data = json::parse(file);
-
-		for (int i = 0; i < data["colors"].size(); i++)
-		{
-			outputText += data["colors"][i].get<std::string>() + ": " + std::to_string(i) + "\n";
-			palette.push_back(hexToRGB(data["colors"][i].get<std::string>().c_str()));
-		}
-
-	} else {
+	if (autoPalette) {
 		palette.push_back(im.at<Vec3b>(0,0));
 		for (int x = 0; x < im.rows; x++){
 			for (int y = 0; y < im.cols; y++ ){
