@@ -22,6 +22,10 @@ jobs:
       with:
         python-version: "3.11"
 
+    - name: Install OpenCV
+      run: |
+        sudo apt install libopencv-dev
+
     - name: Build
       run: |
         cd cpp
