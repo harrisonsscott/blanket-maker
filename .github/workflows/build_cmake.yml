@@ -22,8 +22,9 @@ jobs:
       with:
         python-version: "3.11"
 
-    - name: Install OpenCV
+    - name: Install Dependencies
       run: |
+        pip install pillow
         sudo apt install libopencv-dev
 
     - name: Build
@@ -32,9 +33,13 @@ jobs:
         cmake .
         make
         
-    - name: Tests
+    - name: C++ Tests
       run: |
         cd cpp
         ./blanketMaker 20 20 --random 0 --upscale true
         ./blanketMaker 20 20 --symm 0 --upscale true
         ./blanketMaker 20 20 --skew 0 --upscale true
+    - name: Python Tests
+      run: |
+        cd python
+        python3 main.py 20 20 --image example.png --upscale true --output out.png
