@@ -22,8 +22,9 @@ jobs:
       with:
         python-version: "3.11"
 
-    - name: Install OpenCV
+    - name: Install Dependencies
       run: |
+        pip install pillow
         sudo apt install libopencv-dev
 
     - name: Build
