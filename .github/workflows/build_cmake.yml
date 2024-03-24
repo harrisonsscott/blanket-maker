@@ -1,0 +1,40 @@
+name: CMake Build
+
+env:
+  CMAKE_VERSION: 3.20.1
+
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+    branches: [main]
+
+  workflow_dispatch:
+
+jobs:
+  build-ubuntu:
+    name: Ubuntu bundled build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+
+    - name: Install OpenCV
+      run: |
+        sudo apt install libopencv-dev
+
+    - name: Build
+      run: |
+        cd cpp
+        cmake .
+        make
+        
+    - name: Tests
+      run: |
+        cd cpp
+        ./blanketMaker 20 20 --random 0 --upscale true
+        ./blanketMaker 20 20 --symm 0 --upscale true
+        ./blanketMaker 20 20 --skew 0 --upscale true

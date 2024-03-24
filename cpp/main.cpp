@@ -61,6 +61,10 @@ int main(int argc, char *argv[]){
 	bool upscaleImage = false;
 	bool autoPalette = false;
 	int autoPaletteAmount;
+	bool random = false;
+	bool symm = false;
+	bool skew = false;
+	int seed = rand() % 10000;
 
 	std::string paletteFile = "palette.json";
 	std::string outputImage = "bar.png";
@@ -107,13 +111,124 @@ int main(int argc, char *argv[]){
 			iarg++;
 			outputImage = argv[iarg];
 		}
+		if (iarg + 1 < argc && argvi == "--random") {
+		  iarg++;
+		  seed = std::stoi(argv[iarg]);
+		  random = true;
+		  symm = false;
+		  skew = false;
+		}
+		if (iarg + 1 < argc && argvi == "--symm") {
+		  iarg++;
+		  seed = std::stoi(argv[iarg]);
+		  symm = true;
+		  skew = false;
+		  random = false;
+		}
+		if (iarg + 1 < argc && argvi == "--skew") {
+		  iarg++;
+		  seed = std::stoi(argv[iarg]);
+		  skew = true;
+		  symm = false;
+		  random = false;
+		}				
 
+		
 		// Move on to next argument
 		iarg++;
 	}
 
-	Mat im = imread(image);
+	if (width <= 0 || height <= 0){
+		std::cout << "Invalid dimensions!" << std::endl;
+		return -1;
+	}
+	
+	if ((symm || skew) && width != height) {
+	  std::cout << "Symmetric and skew-symmetric patterns must be square (width == height)" << std::endl;
+	  std::cout << "Input width = " << width << ", input height = " << height << std::endl;	  
+	  return -1;
+	}
 
+	std::vector<Vec3b> palette;
+	
+	std::string outputText = "";
+	if (!autoPalette){
+		std::ifstream file(paletteFile);
+		json data = json::parse(file);
+
+		for (int i = 0; i < data["colors"].size(); i++)
+		{
+			outputText += data["colors"][i].get<std::string>() + ": " + std::to_string(i) + "\n";
+			palette.push_back(hexToRGB(data["colors"][i].get<std::string>().c_str()));
+		}
+
+	}
+
+	Mat im(width, height ,CV_8UC3);
+	if (random || symm || skew) {
+
+	  int N = palette.size();
+	  if (N < 1) {
+	    std::cout << "Palette empty for random/symm/skew pattern" << std::endl;
+	    return -1;
+	  }
+	  Vec3b selectedColor;
+	  if (random) {
+	    for (int x = 0; x < im.rows; x++){
+	      for (int y = 0; y < im.cols; y++ ){
+		selectedColor = palette[ rand() % N ];
+		im.at<Vec3b>(Point(y,x)) = selectedColor;		
+	      }
+	    }
+	  }
+	  if (symm) {
+	    for (int x = 0; x < im.rows; x++){
+	      for (int y = x; y < im.cols; y++ ){
+		selectedColor = palette[ rand() % N ];
+		im.at<Vec3b>(Point(y,x)) = selectedColor;
+		im.at<Vec3b>(Point(x,y)) = selectedColor;
+	      }
+	    }
+	  }
+	  if (skew) {
+	    if (N % 2 == 0) {
+	      std::cout << "Palette must have odd number of colors for skew pattern" << std::endl;
+	      return -1;	      
+	    }
+	    for (int x = 0; x < im.rows; x++){
+	      for (int y = x; y < im.cols; y++ ){
+		int index = rand() % N;
+		selectedColor = palette[ index ];
+		if (x == y)
+		  im.at<Vec3b>(Point(x,x)) = selectedColor;
+		else {
+		  im.at<Vec3b>(Point(x,y)) = selectedColor;
+		  im.at<Vec3b>(Point(y,x)) = palette[ N-index-1 ];
+		}
+	      }
+	    }
+	  }	  
+	
+	  if (upscaleImage){
+	    int aspect = height/width;
+	    int sizeX = std::max(width * 16, 1024);
+	    int sizeY = sizeX * aspect;
+	    
+	    resize(im, im, Size(sizeX, sizeY), 0, 0, INTER_NEAREST);
+	  }
+	  
+	  imwrite(outputImage, im);
+
+	  return 0;
+	}
+	
+	im = imread(image);
+
+	if (im.empty()){
+		std::cout << "Can't find image!" << std::endl;
+		return -1;
+	}
+	
 	if (!autoPalette){
 		// check if files exist
 		struct stat buffer;
@@ -131,33 +246,9 @@ int main(int argc, char *argv[]){
 		}
 	}
 
-	if (im.empty()){
-		std::cout << "Can't find image!" << std::endl;
-		return -1;
-	}
-
-	if (width <= 0 || height <= 0){
-		std::cout << "Invalid dimensions!" << std::endl;
-		return -1;
-	}
-
-	std::vector<Vec3b> palette;
-
 	resize(im, im, Size(width, height));
 
-	std::string outputText = "";
-
-	if (!autoPalette){
-		std::ifstream file(paletteFile);
-		json data = json::parse(file);
-
-		for (int i = 0; i < data["colors"].size(); i++)
-		{
-			outputText += data["colors"][i].get<std::string>() + ": " + std::to_string(i) + "\n";
-			palette.push_back(hexToRGB(data["colors"][i].get<std::string>().c_str()));
-		}
-
-	} else {
+	if (autoPalette) {
 		palette.push_back(im.at<Vec3b>(0,0));
 		for (int x = 0; x < im.rows; x++){
 			for (int y = 0; y < im.cols; y++ ){
