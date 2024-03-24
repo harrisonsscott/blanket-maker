@@ -68,7 +68,7 @@ while iarg < len(sys.argv):
         textFile = sys.argv[iarg]
     if iarg + 1 < len(sys.argv) and sys.argv[iarg] == "--output":
         iarg += 1
-        paletteFile = sys.argv[iarg]
+        outputImage = sys.argv[iarg]
     iarg += 1
 
 im = Image.open(image).resize((width, height)).convert("RGB")
