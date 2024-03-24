@@ -61,6 +61,10 @@ int main(int argc, char *argv[]){
 	bool upscaleImage = false;
 	bool autoPalette = false;
 	int autoPaletteAmount;
+	bool random = false;
+	bool symm = false;
+	bool skew = false;
+	int seed = rand() % 10000;
 
 	std::string paletteFile = "palette.json";
 	std::string outputImage = "bar.png";
@@ -107,13 +111,76 @@ int main(int argc, char *argv[]){
 			iarg++;
 			outputImage = argv[iarg];
 		}
+		if (iarg + 1 < argc && argvi == "--random") {
+		  iarg++;
+		  seed = std::stoi(argv[iarg]);
+		  random = true;
+		  symm = false;
+		  skew = false;
+		}
+		if (iarg + 1 < argc && argvi == "--symm") {
+		  iarg++;
+		  seed = std::stoi(argv[iarg]);
+		  symm = true;
+		  skew = false;
+		  random = false;
+		}
+		if (iarg + 1 < argc && argvi == "--skew") {
+		  iarg++;
+		  seed = std::stoi(argv[iarg]);
+		  skew = true;
+		  symm = false;
+		  random = false;
+		}				
 
+		
 		// Move on to next argument
 		iarg++;
 	}
 
+	if (width <= 0 || height <= 0){
+		std::cout << "Invalid dimensions!" << std::endl;
+		return -1;
+	}
+	
+	if ((symm || skew) && width != height) {
+	  std::cout << "Symmetric and skew-symmetric patterns must be square (width == height)" << std::endl;
+	  std::cout << "Input width = " << width << ", input height = " << height << std::endl;	  
+	  return -1;
+	}
+
+	if (random || symm || skew) {
+	  Mat im(width, height ,CV_8UC3);
+	
+	  for (int x = 0; x < im.rows; x++){
+	    for (int y = 0; y < im.cols; y++ ){
+
+	      Vec3b selectedColor;
+	      selectedColor = (x % 2 == 0) ? Vec3b(x*10,x*10,x*10) : Vec3b(128,128,128);
+	      im.at<Vec3b>(Point(y,x)) = selectedColor;		
+	    }
+	  }
+	
+	  if (upscaleImage){
+	    int aspect = height/width;
+	    int sizeX = std::max(width * 16, 1024);
+	    int sizeY = sizeX * aspect;
+	    
+	    resize(im, im, Size(sizeX, sizeY), 0, 0, INTER_NEAREST);
+	  }
+	  
+	  imwrite(outputImage, im);
+
+	  return 0;
+	}
+	
 	Mat im = imread(image);
 
+	if (im.empty()){
+		std::cout << "Can't find image!" << std::endl;
+		return -1;
+	}
+	
 	if (!autoPalette){
 		// check if files exist
 		struct stat buffer;
@@ -129,16 +196,6 @@ int main(int argc, char *argv[]){
 		if (!filesExist){
 			return -1;
 		}
-	}
-
-	if (im.empty()){
-		std::cout << "Can't find image!" << std::endl;
-		return -1;
-	}
-
-	if (width <= 0 || height <= 0){
-		std::cout << "Invalid dimensions!" << std::endl;
-		return -1;
 	}
 
 	std::vector<Vec3b> palette;
