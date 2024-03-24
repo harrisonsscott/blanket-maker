@@ -20,13 +20,13 @@ make
 
 Run With:
 ```bash
-./blanketMaker [image file] [output size x] [output size y] <--output outputFile> <--palette paletteFile> <--upscale true/false> <--textfile filename>
+./blanketMaker [output size x] [output size y] <--image imageFile> <--output outputFile> <--palette paletteFile> <--upscale true/false> <--textfile filename>
 ```
 For both c++ and python, you can also use "auto" instead of specifying a json file for the palette parameter followed by the palette size to automatically generate a palette.
 
 Example
 ```bash
-./blanketMaker rainbow.png 10 10 --palette auto 8
+./blanketMaker 10 10 --rainbow.png --palette auto 8
 ```
 
 ## Python
@@ -36,20 +36,20 @@ Dependencies:
 
 Run With:
 ```bash
-python3 main.py [image file] [output size x] [output size y] <--output outputFile> <--palette paletteFile> <--upscale true/false> <--textfile filename>
+python3 main.py [output size x] [output size y] <--image imageFile> <--output outputFile> <--palette paletteFile> <--upscale true/false> <--textfile filename>
 ```
 
 
 ## Example
 ```bash
-./blanketMaker rainbow.png 10 10 --upscale true
+./blanketMaker 10 10 --image rainbow.png --upscale true --output out.png
 ```
 
-Original
+rainbow.png (original)
 
 ![][original]
 
-After
+out.png (output)
 
 ![][output]
 

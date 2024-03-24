@@ -52,12 +52,12 @@ std::string RGBToHex(Vec3b color){
 
 int main(int argc, char *argv[]){
 	if (argc < 4){
-		std::cout << "./blanketMaker [image file] [output size x] [output size y] <--output outputFile> <--palette paletteFile> <--upscale true> <--textfile filename>" << std::endl;
+		std::cout << "./blanketMaker [output size x] [output size y] <--image imageFile>  <--output outputFile> <--palette paletteFile> <--upscale true> <--textfile filename>" << std::endl;
 		return -1;
 	}
 
-	int width = std::stoi(argv[2]);
-	int height = std::stoi(argv[3]);
+	int width = std::stoi(argv[1]);
+	int height = std::stoi(argv[2]);
 	bool upscaleImage = false;
 	bool autoPalette = false;
 	int autoPaletteAmount;
@@ -69,11 +69,17 @@ int main(int argc, char *argv[]){
 	std::string paletteFile = "palette.json";
 	std::string outputImage = "bar.png";
 	std::string textFile = "bar.txt";
+	std::string image = "";
 
-	int iarg = 4;
+	int iarg = 3;
 	while (iarg < argc ) {
 		// Read current argument
 		std::string argvi = std::string(argv[iarg]);
+
+		if (iarg + 1 < argc && argvi == "--image") {
+			iarg++;
+			image = argv[iarg];
+		}
 
 		if (iarg + 1 < argc && argvi == "--palette") {
 			iarg++;
@@ -143,32 +149,38 @@ int main(int argc, char *argv[]){
 	  return -1;
 	}
 
-	Mat im(width, height ,CV_8UC3);
+	if (random || symm || skew) {
+	  Mat im(width, height ,CV_8UC3);
 	
-	for (int x = 0; x < im.rows; x++){
-		for (int y = 0; y < im.cols; y++ ){
+	  for (int x = 0; x < im.rows; x++){
+	    for (int y = 0; y < im.cols; y++ ){
 
-			Vec3b selectedColor;
-			selectedColor = (x % 2 == 0) ? Vec3b(x*10,x*10,x*10) : Vec3b(128,128,128);
-			im.at<Vec3b>(Point(y,x)) = selectedColor;		
-		}
+	      Vec3b selectedColor;
+	      selectedColor = (x % 2 == 0) ? Vec3b(x*10,x*10,x*10) : Vec3b(128,128,128);
+	      im.at<Vec3b>(Point(y,x)) = selectedColor;		
+	    }
+	  }
+	
+	  if (upscaleImage){
+	    int aspect = height/width;
+	    int sizeX = std::max(width * 16, 1024);
+	    int sizeY = sizeX * aspect;
+	    
+	    resize(im, im, Size(sizeX, sizeY), 0, 0, INTER_NEAREST);
+	  }
+	  
+	  imwrite(outputImage, im);
+
+	  return 0;
 	}
 	
-	if (upscaleImage){
-		int aspect = height/width;
-		int sizeX = std::max(width * 16, 1024);
-		int sizeY = sizeX * aspect;
+	Mat im = imread(image);
 
-		resize(im, im, Size(sizeX, sizeY), 0, 0, INTER_NEAREST);
+	if (im.empty()){
+		std::cout << "Can't find image!" << std::endl;
+		return -1;
 	}
 	
-	imwrite(outputImage, im);
-
-
-	return 0;
-
-	im = imread(argv[1]);
-
 	if (!autoPalette){
 		// check if files exist
 		struct stat buffer;
@@ -184,11 +196,6 @@ int main(int argc, char *argv[]){
 		if (!filesExist){
 			return -1;
 		}
-	}
-
-	if (im.empty()){
-		std::cout << "Can't find image!" << std::endl;
-		return -1;
 	}
 
 	std::vector<Vec3b> palette;
