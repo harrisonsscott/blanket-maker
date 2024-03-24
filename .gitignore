@@ -2,6 +2,7 @@
 .vscode/
 
 *.png
+!example.png
 *.jpg
 *.jpeg
 *.gif
